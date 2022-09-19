@@ -1,0 +1,288 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.containers {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+header {
+  width: 100%;
+  min-height: 40vh;
+  background-color: #FFA7A7;
+}
+
+nav {
+  padding: 1.4rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+nav .logo-container .img-container {
+  width: 150px;
+}
+nav .logo-container .img-container img {
+  width: 100%;
+}
+nav .nav-container .desktop-nav li {
+  display: inline-block;
+  margin: 0 0.8rem;
+  letter-spacing: 1px;
+  color: #212121;
+  font-weight: 600;
+  cursor: pointer;
+}
+nav .nav-container .desktop-nav li a {
+  color: inherit;
+  text-decoration: none;
+}
+nav .nav-container .desktop-nav li:hover {
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+}
+nav .nav-container .mobile-nav {
+  display: none;
+  max-width: 100%;
+  margin-top: 4.8rem;
+  padding: 1rem;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  border-radius: 10px;
+  background-color: #fafafa;
+}
+nav .nav-container .mobile-nav li {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 1rem auto;
+  letter-spacing: 1px;
+  color: #212121;
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+nav .nav-container .mobile-nav li a {
+  color: inherit;
+  text-decoration: none;
+}
+nav .nav-container .mobile-nav li:hover {
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+}
+nav .nav-container .menu-container {
+  display: none;
+  font-size: 2rem;
+  margin-right: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.header-text-container {
+  height: calc(40vh - 2rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+}
+.header-text-container h1 {
+  font-size: clamp(1.7rem, 5vw, 3.3rem);
+  font-weight: 700;
+  color: #212121;
+  max-width: 55rem;
+  text-align: center;
+}
+.header-text-container p {
+  margin: 20px 0;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  color: inherit;
+  max-width: 50rem;
+  text-align: center;
+}
+.header-text-container a {
+  display: inline-block;
+  padding: 0.9rem 1.6rem;
+  color: #FFA7A7;
+  letter-spacing: 1px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: ease 0.3s;
+  text-align: center;
+  background-color: #212121;
+}
+.header-text-container a:hover {
+  background-color: #f6f6f6;
+}
+
+@media (max-width: 700px) {
+  nav .nav-container .desktop-nav {
+    display: none;
+  }
+  nav .nav-container .menu-container {
+    display: block;
+  }
+}
+.books-active, .fav-active {
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+}
+
+.rating-section {
+  max-width: 1400px;
+  margin: 6rem auto;
+}
+.rating-section .section-heading h1 {
+  font-family: "Rubik", sans-serif;
+  text-transform: uppercase;
+  margin: 2.6rem 0;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #FFA7A7;
+  text-align: center;
+}
+.rating-section .card-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+@media (max-width: 680px) {
+  .rating-section .card-container {
+    justify-content: center;
+  }
+}
+.rating-section .card-container .cards {
+  width: 94%;
+  max-width: 17rem;
+  margin: 2rem;
+}
+.rating-section .card-container .cards .img-container img {
+  width: 100%;
+}
+.rating-section .card-container .cards .text-content {
+  line-height: 1.7;
+}
+.rating-section .card-container .cards .text-content h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #212121;
+}
+.rating-section .card-container .cards .text-content .ratings .stared {
+  color: rgb(255, 225, 53);
+}
+.rating-section .card-container .cards .text-content a {
+  display: block;
+  margin: 0.5rem 0;
+  padding: 0.7rem 1.6rem;
+  letter-spacing: 1px;
+  text-align: center;
+  color: #FFA7A7;
+  font-weight: 500;
+  text-decoration: none;
+  transition: ease 0.3s;
+  background-color: #212121;
+}
+.rating-section .card-container .cards .text-content a:hover {
+  color: #212121;
+  background-color: #FFA7A7;
+}/*# sourceMappingURL=book.css.map */
+
+#book-active {
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+}
+
+
+.details {
+  max-width: 1400px;
+  margin: 3rem auto;
+}
+.details .book-cover {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.details .book-cover .img-container {
+  max-width: 300px;
+  margin: 1rem;
+}
+.details .book-cover .img-container img {
+  width: 100%;
+}
+.details .book-cover .text-content {
+  margin: 1rem;
+}
+.details .book-cover .text-content * {
+  margin-top: 0.8rem;
+}
+.details .book-cover .text-content p {
+  max-width: 45rem;
+}
+
+
+
+
+.review {
+  max-width: 1400px;
+  margin: 2rem auto;
+}
+.review hr {
+  background-color: #FFA7A7;
+  border: 0;
+  height: 2px;
+}
+.review .text-content {
+  margin: 2rem 0;
+  color: #FFA7A7;
+}
+.review input, .review textarea {
+  display: block;
+  outline: none;
+  width: 100%;
+  margin-top: 1rem;
+  max-width: 30rem;
+  height: 2.6rem;
+  padding: 0 1rem;
+  border: 2px solid rgba(255, 167, 167, 0.6);
+}
+.review textarea {
+  display: block;
+  padding: 0.8rem 1rem;
+  height: 8rem;
+  margin-top: 1rem;
+}
+.review #submit {
+  border: none;
+  outline: none;
+  padding: 0.9rem 1.6rem;
+  color: #FFA7A7;
+  letter-spacing: 1px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: ease 0.3s;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #212121;
+  background-color: #212121;
+}
+.review #submit:hover {
+  background-color: #f6f6f6;
+  border: 1px solid #FFA7A7;
+}/*# sourceMappingURL=book.css.map */
+

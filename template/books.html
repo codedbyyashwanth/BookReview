@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bookie - All Books</title>
+
+        
+        <!-- CSS Style -->
+        <link rel="stylesheet" href="{% static 'resources/styles/book.css' %}">
+
+        <!-- ion-icon  -->
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+        <header class="book-header">
+                <nav class="containers">
+                        <div class="logo-container">
+                                <div class="img-container">
+                                        <img src="{% static 'resources/img/logo.png' %}" alt="">
+                                </div>
+                        </div>
+                        <div class="nav-container">
+                                <!-- Navigation Menu for Large Screens like desktop or PC -->
+                                <ul class="desktop-nav">
+                                        <li><a href="{% url 'home' %}">Home</a></li>
+                                        <li class="books-active"><a href="{% url 'books' %}">Books</a></li>
+                                        <li><a href="{% url 'favourite' %}">Favourites</a></li>
+                                        {% if loggedIn %}
+                                                <li><a href="#">{{ request.session.username }}</a></li>
+                                        {% else %}
+                                                <li><a href="{% url 'login' %}">Log  In / Sign Up</a></li>
+                                        {% endif %}
+                                </ul>
+                                <!-- Navigation Menu for Small Screens like mobile phones -->
+                                <ul class="mobile-nav">
+                                        <li><a href="{% url 'home' %}">Home</a></li>
+                                        <li class="books-active"><a href="{% url 'books' %}">Books</a></li>
+                                        <li><a href="{% url 'favourite' %}">Favourites</a></li>
+                                        {% if loggedIn %}
+                                                <li><a href="#">{{ request.session.username }}</a></li>
+                                        {% else %}
+                                                <li><a href="{% url 'login' %}">Log  In / Sign Up</a></li>
+                                        {% endif %}
+                                </ul>
+                                <!-- Menu bar -->
+                                <div class="menu-container">
+                                        <ion-icon id="menu" name="menu-sharp"></ion-icon>
+                                </div>
+                        </div>
+                </nav>
+                <div class="header-text-container containers">
+                        <div>
+                                <h1>Listing of Books</h1>
+                        </div>
+                </div>
+        </header>
+
+        <main>
+                <section class="rating-section">
+                        <div class="section-heading">
+                                <h1>Popular Books</h1>
+                        </div>
+                        <div class="card-container">
+                                {% for values in data %}
+                                        <div class="cards">
+                                                <div class="img-container">
+                                                        {% comment %} <img src="{% static 'resources/img/book-cover-1.jpg' %}" alt=""> {% endcomment %}
+                                                        <img src="{{ values.book_image }}" alt="">
+                                                </div>
+                                                <div class="text-content">
+                                                        <div class="ratings">
+                                                                {% comment %} {{values.book_review_rate | floatformat:"0"}} {% endcomment %}
+                                                                {% for i in iterator %}
+                                                                        {% if values.book_review_star >= i %}
+                                                                                <ion-icon name="star-sharp" class="stared"></ion-icon>
+                                                                        {% else %}
+                                                                                <ion-icon name="star-sharp" ></ion-icon>
+                                                                        {% endif %}
+                                                                {% endfor %}
+                                                        </div>
+                                                        <h4>{{ values.book_name }}</h4>
+                                                        <a href="{% url 'add_to_fav'  values.id  %}">Add to Fav</a>
+                                                        <a href="{% url 'book_details'  values.id  %}">View Book</a>
+                                                </div>
+                                        </div>
+                                {% endfor %}
+                        </div>
+                </section>
+        </main>
+        <script>
+                const menu = document.getElementById("menu");
+                const desktop_navbar = document.getElementsByClassName("mobile-nav")[0];
+                const menu_bar = document.getElementsByClassName("menu-container")[0];
+                var clicked = false;
+
+                menu.addEventListener('click', () => {
+                        if (clicked) {
+                                menu.setAttribute("name", "menu-sharp");
+                                clicked = false;
+                                desktop_navbar.style.display = "none";
+                        } else {
+                                menu.setAttribute("name", "close-sharp");
+                                clicked = true;
+                                desktop_navbar.style.display = "block";
+                        }
+                });
+        </script>
+</body>
+</html>

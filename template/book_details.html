@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{data.book_name}}</title>
+
+        
+        <link rel="stylesheet" href="{% static 'resources/styles/book.css' %}">
+
+        <style>
+                .review-list {
+                        margin:0.5rem 0;
+                }
+                .account {
+                        display: flex;
+                        justify-content: left;
+                        align-items: flex-start;
+                }
+
+                .account .img-container, .account .text-content {
+                        margin:1rem;
+                        color:#212121;
+                        line-height:1.5;
+                }
+                
+                .review-list .account .img-container {
+                        width: 60px;
+                        height:60px;
+                        border-radius:50%;
+                        padding:0.4rem;
+                        border:1px solid #FFA7A7;
+                }
+                
+                .review-list .account .img-container img {
+                        width: 100%;
+                }
+        </style>
+
+         <!-- ion-icon  -->
+         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+ 
+         <!-- Google Fonts -->
+         <link rel="preconnect" href="https://fonts.googleapis.com">
+         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+        <header>
+                <nav class="containers">
+                        <div class="logo-container">
+                                <div class="img-container">
+                                        <img src="{% static 'resources/img/logo.png' %}" alt="">
+                                </div>
+                        </div>
+                        <div class="nav-container">
+                                <!-- Navigation Menu for Large Screens like desktop or PC -->
+                                <ul class="desktop-nav">
+                                        <li><a href="{% url 'home' %}">Home</a></li>
+                                        <li   id="book-active"><a href="{% url 'books' %}">Books</a></li>
+                                        <li><a href="{% url 'favourite' %}">Favourites</a></li>
+                                        {% if loggedIn %}
+                                                <li><a href="#">{{ request.session.username }}</a></li>
+                                        {% else %}
+                                                <li><a href="{% url 'login' %}">Log  In / Sign Up</a></li>
+                                        {% endif %}
+                                </ul>
+                                <!-- Navigation Menu for Small Screens like mobile phones -->
+                                <ul class="mobile-nav">
+                                        <li ><a href="{% url 'home' %}">Home</a></li>
+                                        <li   id="book-active"><a href="{% url 'books' %}">Books</a></li>
+                                        <li><a href="{% url 'favourite' %}">Favourites</a></li>
+                                        {% if loggedIn %}
+                                                <li><a href="#">{{ request.session.username }}</a></li>
+                                        {% else %}
+                                                <li><a href="{% url 'login' %}">Log  In / Sign Up</a></li>
+                                        {% endif %}
+                                </ul>
+                                <!-- Menu bar -->
+                                <div class="menu-container">
+                                        <ion-icon id="menu" name="menu-sharp"></ion-icon>
+                                </div>
+                        </div>
+                </nav>
+                <div class="header-text-container containers">
+                        <h1>Book Details</h1>
+                </div>
+        </header>
+
+
+        <main>
+                <section class="details">
+                        <div class="book-cover">
+                                <div class="img-container">
+                                        <img src="{{ data.book_image }}" alt="">
+                                </div>
+                                <div class="text-content">
+                                        <h1>{{ data.book_name }}</h1>
+                                        <p><b>Auther: </b> {{ data.book_author }}</p>
+                                        <p><b>Published On: </b> {{ data.book_published }}</p>
+                                        <p><b>Description: </b>
+                                        <br>
+                                        {{ data.book_small_desc }}
+                                        </p>
+                                        <p>
+                                              {{data.book_desc}}
+                                        </p>
+                                </div>
+                        </div>
+                </section>
+                <section class="review">
+                        <div class="text-content">
+                                <h2>Reviews</h2><br>
+                                <hr>
+                        </div>
+                        <form style="margin-bottom:2rem;" method='POST' action="{% url 'book_details' data.id %}" class="review-form">
+                                {% csrf_token %}
+                                <input type="text" placeholder="Enter the Title" name="title">
+                                <input id="ratings" type="number" min="1" max="5" placeholder="Give Rating" name="rating">
+                                <input style="display:none;" type="number" min="1" max="5" name="review_count" value="{{ data.book_review_star  }}">
+                                <textarea type="text" placeholder="Description for the Title" name="message"></textarea>
+                                <input id="submit" type="submit" value="Submit">
+                        </form>
+                        {% if review_data %}
+                                {% for review in review_data %}
+                                <div class="review-list">
+                                        <div class="account">
+                                                <div class="img-container">
+                                                        <img src="{% static 'resources/img/account.png' %}" alt="">
+                                                </div>
+                                                <div class="text-content">
+                                                        <h4>{{ request.session.username }}</h4>
+                                                        <h3>{{ review.review_title }} ( Ratings: {{ review.review_star }} )</h3>
+                                                        <p>
+                                                                {{ review.review_desc }}
+                                                        </p>
+                                                </div>
+                                        </div>
+                                </div>
+                                <hr>
+                                {% endfor %}
+                        {% else %}
+                                <h2 style="margin-top:2rem;">No Review</h2>
+                        {% endif %}
+                </section>
+        </main>
+
+
+        <script>
+                const menu = document.getElementById("menu");
+                const desktop_navbar = document.getElementsByClassName("mobile-nav")[0];
+                const menu_bar = document.getElementsByClassName("menu-container")[0];
+                var clicked = false;
+
+                const ratings = document.getElementById('ratings');
+                ratings.addEventListener('keypress', (e) => {
+                        e.keyCode != 38 && e.keyCode != 40 && e.preventDefault()
+                });
+
+                menu.addEventListener('click', () => {
+                        if (clicked) {
+                                menu.setAttribute("name", "menu-sharp");
+                                clicked = false;
+                                desktop_navbar.style.display = "none";
+                        } else {
+                                menu.setAttribute("name", "close-sharp");
+                                clicked = true;
+                                desktop_navbar.style.display = "block";
+                        }
+                });
+        </script>
+</body>
+</html>
