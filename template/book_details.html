@@ -116,14 +116,16 @@
                                 <h2>Reviews</h2><br>
                                 <hr>
                         </div>
-                        <form style="margin-bottom:2rem;" method='POST' action="{% url 'book_details' data.id %}" class="review-form">
-                                {% csrf_token %}
-                                <input type="text" placeholder="Enter the Title" name="title">
-                                <input id="ratings" type="number" min="1" max="5" placeholder="Give Rating" name="rating">
-                                <input style="display:none;" type="number" min="1" max="5" name="review_count" value="{{ data.book_review_star  }}">
-                                <textarea type="text" placeholder="Description for the Title" name="message"></textarea>
-                                <input id="submit" type="submit" value="Submit">
-                        </form>
+                        {% if loggedIn %}
+                                <form style="margin-bottom:2rem;" method='POST' action="{% url 'book_details' data.id %}" class="review-form">
+                                        {% csrf_token %}
+                                        <input type="text" placeholder="Enter the Title" name="title">
+                                        <input id="ratings" type="number" min="1" max="5" placeholder="Give Rating" name="rating">
+                                        <input style="display:none;" type="number" min="1" max="5" name="review_count" value="{{ data.book_review_star  }}">
+                                        <textarea type="text" placeholder="Description for the Title" name="message"></textarea>
+                                        <input id="submit" type="submit" value="Submit">
+                                </form>
+                        {% endif %}
                         {% if review_data %}
                                 {% for review in review_data %}
                                 <div class="review-list">

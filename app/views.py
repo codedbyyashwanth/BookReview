@@ -5,12 +5,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 def Home(request):
-        data = BookData.objects.all()
+        popular_books = BookData.objects.filter(book_review_star = 4)[:4]
+        rated_books = BookData.objects.filter(book_review_star = 5)[:4]
         loginValue = False
         if request.session.keys() :
                 if request.session['mail']:
                         loginValue = True
-        context = { "data" : data, 'iterator':range(1,6), "loggedIn" : loginValue }
+        context = { "data" : popular_books, "rated" : rated_books , 'iterator':range(1,6), "loggedIn" : loginValue }
         return render(request, 'index.html', context)
 
 def Books(request):

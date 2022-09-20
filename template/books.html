@@ -88,7 +88,9 @@
                                                                 {% endfor %}
                                                         </div>
                                                         <h4>{{ values.book_name }}</h4>
-                                                        <a href="{% url 'add_to_fav'  values.id  %}">Add to Fav</a>
+                                                        {% if loggedIn %}
+                                                                <a href="{% url 'add_to_fav'  values.id  %}">Add to Fav</a>
+                                                        {% endif %}
                                                         <a href="{% url 'book_details'  values.id  %}">View Book</a>
                                                 </div>
                                         </div>
