@@ -99,9 +99,18 @@
                                 </div>
                                 <div class="text-content">
                                         <h1>{{ data.book_name }}</h1>
-                                        <p><b>Auther: </b> {{ data.book_author }}</p>
-                                        <p><b>Published On: </b> {{ data.book_published }}</p>
-                                        <p><b>Description: </b>
+                                        <div class="ratings">
+                                                {% for i in iterator %}
+                                                        {% if data.book_review_star >= i %}
+                                                                <ion-icon name="star-sharp" class="stared"></ion-icon>
+                                                        {% else %}
+                                                                <ion-icon name="star-sharp" ></ion-icon>
+                                                        {% endif %}
+                                                {% endfor %}
+                                        </div>
+                                        <p><b style="font-size: 1rem;">Auther: </b> {{ data.book_author }}</p>
+                                        <p><b style="font-size: 1rem;">Published On: </b> {{ data.book_published }}</p>
+                                        <p><b style="font-size: 1rem;">Description: </b>
                                         <br>
                                         {{ data.book_small_desc }}
                                         </p>
@@ -128,21 +137,34 @@
                         {% endif %}
                         {% if review_data %}
                                 {% for review in review_data %}
-                                <div class="review-list">
-                                        <div class="account">
+                                <div class="review-section">
+                                        <div class="review-profile">
                                                 <div class="img-container">
                                                         <img src="{% static 'resources/img/account.png' %}" alt="">
                                                 </div>
                                                 <div class="text-content">
-                                                        <h4>{{ request.session.username }}</h4>
-                                                        <h3>{{ review.review_title }} ( Ratings: {{ review.review_star }} )</h3>
-                                                        <p>
-                                                                {{ review.review_desc }}
-                                                        </p>
+                                                        <div class="text">
+                                                                <h4>{{ review.username }}</h4>
+                                                                <div class="ratings">
+                                                                        {% for i in iterator %}
+                                                                                {% if review.review_star >= i %}
+                                                                                        <ion-icon name="star-sharp" class="stared"></ion-icon>
+                                                                                {% else %}
+                                                                                        <ion-icon name="star-sharp" ></ion-icon>
+                                                                                {% endif %}
+                                                                        {% endfor %}
+                                                                </div>
+                                                        </div>
+                                                        <h5>{{ review.date }}</h5>
                                                 </div>
                                         </div>
+                                        <div class="review-comment">
+                                                <h3>{{ review.review_title }}</h3>
+                                                <p>
+                                                       {{ review.review_desc }}
+                                                </p>
+                                        </div>
                                 </div>
-                                <hr>
                                 {% endfor %}
                         {% else %}
                                 <h2 style="margin-top:2rem;">No Review</h2>

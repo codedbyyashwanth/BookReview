@@ -33,9 +33,15 @@
                                         <li><a href="{% url 'books' %}">Books</a></li>
                                         <li><a href="{% url 'favourite' %}">Favourites</a></li>
                                         {% if loggedIn %}
-                                                <li><a href="#">{{ request.session.username }}</a></li>
+                                                <li id="signin"><a href="#">{{ request.session.username }}</a>
+                                                        <div id="logout">
+                                                                <a href="{% url 'logout' %}">Logout</a>
+                                                        </div>
+                                                </li>
                                         {% else %}
-                                                <li><a href="{% url 'login' %}">Log  In / Sign Up</a></li>
+                                                <li>
+                                                        <a href="{% url 'login' %}">Log  In / Sign Up</a>
+                                                </li>
                                         {% endif %}
                                 </ul>
                                 <!-- Navigation Menu for Small Screens like mobile phones -->

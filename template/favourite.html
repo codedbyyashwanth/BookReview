@@ -65,35 +65,43 @@
         </header>
 
         <main>
-                <section class="rating-section">
-                        <div class="section-heading">
-                                <h1>Best Rated Books</h1>
-                        </div>
-                        <div class="card-container">
-                                {% for values in data %}
-                                        <div class="cards">
-                                                <div class="img-container">
-                                                        {% comment %} <img src="{% static 'resources/img/book-cover-1.jpg' %}" alt=""> {% endcomment %}
-                                                        <img src="{{ values.book_image }}" alt="">
-                                                </div>
-                                                <div class="text-content">
-                                                        <div class="ratings">
-                                                                {% comment %} {{values.book_review_rate | floatformat:"0"}} {% endcomment %}
-                                                                {% for i in iterator %}
-                                                                        {% if values.book_review_star >= i %}
-                                                                                <ion-icon name="star-sharp" class="stared"></ion-icon>
-                                                                        {% else %}
-                                                                                <ion-icon name="star-sharp" ></ion-icon>
-                                                                        {% endif %}
-                                                                {% endfor %}
-                                                        </div>
-                                                        <h4>{{ values.book_name }}</h4>
-                                                        <a href="{% url 'book_details'  values.id  %}">View Book</a>
-                                                </div>
+                {% if loggedIn  %}
+                        {% if values|length != 0 %}
+                                <section class="rating-section">
+                                        <div class="section-heading">
+                                                <h1>Best Rated Books</h1>
                                         </div>
-                                {% endfor %}
-                        </div>
-                </section>
+                                        <div class="card-container">
+                                                {% for values in data %}
+                                                        <div class="cards">
+                                                                <div class="img-container">
+                                                                        {% comment %} <img src="{% static 'resources/img/book-cover-1.jpg' %}" alt=""> {% endcomment %}
+                                                                        <img src="{{ values.book_image }}" alt="">
+                                                                </div>
+                                                                <div class="text-content">
+                                                                        <div class="ratings">
+                                                                                {% comment %} {{values.book_review_rate | floatformat:"0"}} {% endcomment %}
+                                                                                {% for i in iterator %}
+                                                                                        {% if values.book_review_star >= i %}
+                                                                                                <ion-icon name="star-sharp" class="stared"></ion-icon>
+                                                                                        {% else %}
+                                                                                                <ion-icon name="star-sharp" ></ion-icon>
+                                                                                        {% endif %}
+                                                                                {% endfor %}
+                                                                        </div>
+                                                                        <h4>{{ values.book_name }}</h4>
+                                                                        <a href="{% url 'book_details'  values.id  %}">View Book</a>
+                                                                </div>
+                                                        </div>
+                                                {% endfor %}
+                                        </div>
+                                </section>
+                        {% else %}
+                                <h2 style="text-align: center; margin-top:1rem;">No Favourite Books</h2>
+                        {% endif %}
+                {% else %}
+                        <h2  style="text-align: center; margin-top:1rem;">Login or Sign Up to add books to favourite</h2>
+                {% endif %}
         </main>
         <script>
                 const menu = document.getElementById("menu");

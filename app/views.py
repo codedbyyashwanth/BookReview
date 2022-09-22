@@ -8,7 +8,7 @@ def Home(request):
         popular_books = BookData.objects.filter(book_review_star = 4)[:4]
         rated_books = BookData.objects.filter(book_review_star = 5)[:4]
         loginValue = False
-        if request.session.keys() :
+        if 'mail'  in request.session:
                 if request.session['mail']:
                         loginValue = True
         context = { "data" : popular_books, "rated" : rated_books , 'iterator':range(1,6), "loggedIn" : loginValue }
@@ -17,25 +17,28 @@ def Home(request):
 def Books(request):
         data = BookData.objects.all()
         loginValue = False
-        if request.session.keys() :
+        if 'mail'  in request.session:
                 if request.session['mail']:
                         loginValue = True
         context = { "data" : data, 'iterator':range(1,6), "loggedIn" : loginValue }
         return render(request, 'books.html', context)
 
 def Favourite(request):
-        book_data = []
-        data = FavBookData.objects.all()
-        for values in data:
-                book_id_data = BookData.objects.get(id=values.book_id)
-                raw_data = { "book_image" : book_id_data.book_image, "book_review_star" : book_id_data.book_review_star, "book_name" : book_id_data.book_name, "id" : book_id_data.id }
-                book_data.append(raw_data)
-        loginValue = False
-        if request.session.keys() :
-                if request.session['mail']:
-                        loginValue = True
-        context = { "data" :  book_data, "iterator" : range(1, 6) ,"loggedIn" : loginValue }
-        return render(request, 'favourite.html', context)
+        if 'mail' not in request.session:
+                return redirect(Home)
+        else:
+                book_data = []
+                data = FavBookData.objects.filter(user_email=request.session['mail'])
+                for values in data:
+                        book_id_data = BookData.objects.get(id=values.book_id)
+                        raw_data = { "book_image" : book_id_data.book_image, "book_review_star" : book_id_data.book_review_star, "book_name" : book_id_data.book_name, "id" : book_id_data.id }
+                        book_data.append(raw_data)
+                loginValue = False
+                if 'mail'  in request.session:
+                        if request.session['mail']:
+                                loginValue = True
+                context = { "data" :  book_data, "iterator" : range(1, 6) ,"loggedIn" : loginValue }
+                return render(request, 'favourite.html', context)
 
 def AddToFav(request, id):
         mail = request.session['mail']
@@ -44,7 +47,7 @@ def AddToFav(request, id):
         return redirect(Favourite)
 
 def Login(request):
-        if request.session.keys() :
+        if 'mail'  in request.session:
                 if request.session['mail']:
                         return redirect(Home)
         if request.method == "POST":
@@ -58,6 +61,12 @@ def Login(request):
                         return redirect(Home)
         return render(request, 'login.html')
 
+def Logout(request):
+        del request.session['mail']
+        del request.session['username']
+        request.session.modified = True
+        return redirect(Home)
+
 def Signup(request):
         if (request.method == "POST"):
                 username = request.POST['username']
@@ -68,7 +77,7 @@ def Signup(request):
                 request.session['username'] = username
                 user.save()
                 return redirect(Home)
-        if request.session.keys() :
+        if 'mail'  in request.session:
                 if request.session['mail']:
                         return redirect(Home)
         return render(request, 'signup.html')
@@ -79,20 +88,19 @@ def BookDetails(request, id):
                 review_star = request.POST['rating']
                 print(review_star)
                 review_message = request.POST['message']
-                mail = request.session['mail']
                 book_review_count = request.POST['review_count']
                 review_stars = ( int(book_review_count) + int(review_star) ) / 2
                 review_stars = int(review_star)
                 updateBookData = BookData.objects.get(id=id)
                 updateBookData.book_review_star = review_stars
                 updateBookData.save()
-                reviewdata = ReviewData(book_id = id, user_email=mail, review_title=review_title, review_desc=review_message, review_star=review_star)
+                reviewdata = ReviewData(book_id = id, username= request.session['username'], review_title=review_title, review_desc=review_message, review_star=review_star)
                 reviewdata.save()
         data = BookData.objects.get(id=id)
         review_data = ReviewData.objects.filter(book_id=id)
         loginValue = False
-        if request.session.keys() :
+        if 'mail'  in request.session:
                 if request.session['mail']:
                         loginValue = True
-        context = { "data" : data, "review_data" : review_data ,"loggedIn" : loginValue }
+        context = { "data" : data, "review_data" : review_data ,"loggedIn" : loginValue, 'iterator':range(1,6) }
         return render(request, 'book_details.html', context)

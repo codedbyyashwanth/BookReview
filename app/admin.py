@@ -11,4 +11,4 @@ class AdminModel(admin.ModelAdmin):
 
 @admin.register(ReviewData)
 class AdminModel(admin.ModelAdmin):
-        list_display = ('user_email', 'review_title',)
+        list_display = ('username', 'review_title',)

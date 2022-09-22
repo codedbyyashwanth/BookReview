@@ -156,7 +156,7 @@ nav .nav-container .menu-container {
 }
 .rating-section .card-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -210,17 +210,17 @@ nav .nav-container .menu-container {
 
 
 .details {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 3rem auto;
 }
 .details .book-cover {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: flex-start;
 }
 .details .book-cover .img-container {
   max-width: 300px;
-  margin: 1rem;
+  margin: 1rem 1rem 1rem;
 }
 .details .book-cover .img-container img {
   width: 100%;
@@ -228,29 +228,72 @@ nav .nav-container .menu-container {
 .details .book-cover .text-content {
   margin: 1rem;
 }
+.details .book-cover .text-content .ratings .stared {
+  color: rgb(255, 225, 53);
+}
 .details .book-cover .text-content * {
   margin-top: 0.8rem;
 }
 .details .book-cover .text-content p {
-  max-width: 45rem;
+  /* max-width: 45rem; */
+  font-size: 0.9rem;
+  letter-spacing: 1px;
 }
-
 
 
 
 .review {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 2rem auto;
 }
-.review hr {
-  background-color: #FFA7A7;
-  border: 0;
-  height: 2px;
+
+
+.review-section {
+  max-width: 1200px;
+  margin: 3rem auto;
 }
-.review .text-content {
-  margin: 2rem 0;
-  color: #FFA7A7;
+.review-section .review-profile {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
+.review-section .review-profile .img-container {
+  width: 50px;
+  margin-right: 1rem;
+}
+.review-section .review-profile .img-container img {
+  width: 100%;
+}
+.review-section .review-profile .text-content .text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.review-section .review-profile .text-content .text .ratings {
+  margin-left: 0.6rem;
+}
+.review-section .review-profile .text-content .text .ratings ion-icon {
+  margin-top: 3px;
+  
+}
+.review-section .review-profile .text-content .text .ratings .stared {
+  color: rgb(255, 225, 53);
+}
+.review-section .review-profile .text-content h5 {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 0.8rem;
+}
+.review-section .review-comment {
+  margin: 1rem 0;
+}
+.review-section .review-comment h3 {
+  font-size: 1.1rem;
+}
+.review-section .review-comment p {
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
 .review input, .review textarea {
   display: block;
   outline: none;
@@ -284,5 +327,4 @@ nav .nav-container .menu-container {
 .review #submit:hover {
   background-color: #f6f6f6;
   border: 1px solid #FFA7A7;
-}/*# sourceMappingURL=book.css.map */
-
+}
