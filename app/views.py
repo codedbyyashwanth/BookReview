@@ -34,9 +34,8 @@ def Favourite(request):
                         raw_data = { "book_image" : book_id_data.book_image, "book_review_star" : book_id_data.book_review_star, "book_name" : book_id_data.book_name, "id" : book_id_data.id }
                         book_data.append(raw_data)
                 loginValue = False
-                if 'mail'  in request.session:
-                        if request.session['mail']:
-                                loginValue = True
+                if request.session['mail']:
+                        loginValue = True
                 context = { "data" :  book_data, "iterator" : range(1, 6) ,"loggedIn" : loginValue }
                 return render(request, 'favourite.html', context)
 
